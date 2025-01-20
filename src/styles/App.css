@@ -1,0 +1,174 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: cursive;
+  cursor: url('../assets/cursorDefault.png'), default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select {
+  margin: 0;
+  font-family: cursive;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img,
+video {
+  width: auto;
+  max-width: 100%;
+  height: fit-content;
+  max-height: 100%;
+  object-fit: contain;
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+.textBlock {
+  background-color: white;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.imgBorder {
+  object-fit: contain;
+  border-radius: 20px;
+  border: 5px solid #efb159c9;
+  cursor: url('../assets/cursorPointer.png') 15 0, pointer;
+}
+
+.border {
+  border-radius: 20px;
+  border: 5px solid #efb159c9;
+}
+
+.greenBorder {
+  transition: 1s;
+  transform: scale(1.2);
+  border-radius: 20px;
+  border: 5px solid #00a500c9;
+}
+
+.pointer {
+  cursor: url('../assets/cursorPointer.png') 15 0, pointer;
+}
+
+.noBorder {
+  border: none;
+}
+
+.noPointer {
+  cursor: url('../assets/cursorDefault.png'), default;
+}
+
+.scale {
+  transition: 1s;
+  /* Время эффекта */
+}
+
+.scale:hover {
+  transform: scale(1.2);
+  /* Увеличиваем масштаб */
+}
+
+.checkedElement {
+  animation: 1s fadeOut;
+  animation-fill-mode: forwards;
+
+  visibility: visible;
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.footer {
+  background-color: rgba(238, 220, 118, 0.733);
+  padding: 0 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.closeButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 1.5em !important;
+  height: 1.5em !important;
+}
