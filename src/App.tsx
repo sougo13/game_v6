@@ -9,7 +9,7 @@ import { Context } from "./Context";
 import "./styles/App.css";
 import "./styles/MainPage.css";
 import { Manual } from "./Modal/Manual";
-import { bg } from "./bgConst";
+import bg from "./assets/bg.jpg";
 
 const bgAudio = new Audio(bgAudioUrl);
 bgAudio.loop = true;
@@ -63,23 +63,13 @@ function App() {
     setCurrentPage(1);
   };
 
+  console.log("currentPageIndex: ", currentPageIndex);
+
   return (
     <>
-      <div
-        className="background"
-        style={{ backgroundImage: `url(${bg[currentPageIndex]})` }}
-      />
+      <div className="background" style={{ backgroundImage: `url(${bg})` }} />
       <div className="mainPageContainer">
         <div className="mainHeader">
-          {currentPageIndex === 0 && (
-            <button
-              className="starButton"
-              role="button"
-              onClick={onClickHandler}
-            >
-              Вперед!
-            </button>
-          )}
           {currentPageIndex > 1 && (
             <img
               src={goToMenu}
@@ -101,6 +91,11 @@ function App() {
           Автор игры: учитель-логопед Ковязина Светлана Евгеньевна <br /> МАДОУ
           «Детский сад №390» г. Перми
         </div>
+        {currentPageIndex === 0 && (
+          <button className="starButton" role="button" onClick={onClickHandler}>
+            Вперед!
+          </button>
+        )}
       </div>
     </>
   );

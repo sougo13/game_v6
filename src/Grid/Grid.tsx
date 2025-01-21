@@ -18,6 +18,7 @@ type TGridItem = {
   };
   children: React.ReactNode;
   style?: React.CSSProperties;
+  multiple?: number;
 };
 
 export const GridItem: FC<TGridItem> = (props) => {
@@ -25,16 +26,17 @@ export const GridItem: FC<TGridItem> = (props) => {
     children,
     position: { colEnd, colStart, rowEnd, rowStart },
     style,
+    multiple = 2,
   } = props;
 
   return (
     <div
       className="gridItem"
       style={{
-        gridColumnStart: colStart,
-        gridColumnEnd: colEnd,
-        gridRowStart: rowStart,
-        gridRowEnd: rowEnd,
+        gridColumnStart: colStart * multiple,
+        gridColumnEnd: colEnd * multiple,
+        gridRowStart: rowStart * multiple,
+        gridRowEnd: rowEnd * multiple,
         ...style,
       }}
     >

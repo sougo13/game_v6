@@ -5,8 +5,9 @@ import { Status } from "../types";
 import { Grid, GridItem } from "../Grid/Grid";
 import { NextButton } from "../NextButton/NextButton";
 import { PapugStatus } from "../PapugStatus/PapugStatus";
-import { photos } from "./const";
+import { answers, extra, questions } from "./const";
 import { ManualButton } from "../Modal/ManualButton";
+import { getRandomElementsExcludingIndex, shuffleArray } from "../utils";
 
 export const Game5 = () => {
   const { setStatus, onClickAudio, setTitle, setCurrentPage } =
@@ -14,24 +15,40 @@ export const Game5 = () => {
 
   const [stage, setStage] = useState<number>(0);
   const [checked, setChecked] = useState<boolean>(false);
+  const [preparedAnswers, setPreparedAnswers] = useState<
+    { src: string; isCorrect: boolean }[]
+  >([]);
 
   useEffect(() => {
-    setTitle("Кто, что ест?");
+    setTitle("Загадки по профессиям");
   }, []);
 
   useEffect(() => {
-    if (!photos[stage + 1] && checked) {
-      setTimeout(() => {
-        setCurrentPage(7);
-      }, 2000);
-    }
-  }, [stage, checked]);
+    const getAnswers = () => {
+      const answersArr: { src: string; isCorrect: boolean }[] = [
+        { src: answers[stage], isCorrect: true },
+      ];
+      const randomElements = getRandomElementsExcludingIndex(
+        answers,
+        stage,
+        3,
+        extra
+      ).map((elem) => ({ src: elem, isCorrect: false }));
+      return shuffleArray(answersArr.concat(randomElements));
+    };
+
+    setPreparedAnswers(getAnswers());
+  }, [stage]);
 
   const nextStageHandler = () => {
-    onClickAudio();
-    setStage((prev) => prev + 1);
-    setStatus(Status.whait);
-    setChecked(false);
+    if (!questions[stage + 1] && checked) {
+      setCurrentPage(7);
+    } else {
+      onClickAudio();
+      setStage((prev) => prev + 1);
+      setStatus(Status.whait);
+      setChecked(false);
+    }
   };
 
   const itemClickHandler = (isCorrect: boolean) => {
@@ -48,34 +65,27 @@ export const Game5 = () => {
   };
 
   const positions = [
-    { colStart: 5, colEnd: 7, rowStart: 1, rowEnd: 6 },
-    { colStart: 8, colEnd: 10, rowStart: 1, rowEnd: 6 },
-    { colStart: 5, colEnd: 7, rowStart: 7, rowEnd: 12 },
-    { colStart: 8, colEnd: 10, rowStart: 7, rowEnd: 12 },
+    { colStart: 2, colEnd: 7, rowStart: 2, rowEnd: 12 },
+    { colStart: 15, colEnd: 20, rowStart: 2, rowEnd: 12 },
+    { colStart: 2, colEnd: 7, rowStart: 13, rowEnd: 23 },
+    { colStart: 15, colEnd: 20, rowStart: 13, rowEnd: 23 },
   ];
-
-  const { animal, food } = photos[stage];
 
   return (
     <div className="game1Container">
       <Grid>
         <GridItem
-          position={{ colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 13 }}
+          position={{ colStart: 7, colEnd: 15, rowStart: 8, rowEnd: 18 }}
+          multiple={1}
         >
-          <img
-            loading="eager"
-            onLoad={() => {
-              console.log("onLoad");
-            }}
-            onLoadStart={() => {
-              console.log("onLoadStart");
-            }}
-            src={animal}
-            className="imgBorder noPointer"
-          />
+          <div className="questionText">
+            {questions[stage].map((q, i) => (
+              <span key={i}>{q}</span>
+            ))}
+          </div>
         </GridItem>
-        {food.map(({ src, isCorrect }, i) => (
-          <GridItem key={src} position={positions[i]}>
+        {preparedAnswers.map(({ src, isCorrect }, i) => (
+          <GridItem multiple={1} key={i} position={positions[i]}>
             <img
               loading="eager"
               className={
@@ -88,9 +98,7 @@ export const Game5 = () => {
             />
           </GridItem>
         ))}
-        {!!photos[stage + 1] && (
-          <NextButton nextStageHandler={nextStageHandler} />
-        )}
+        {checked && <NextButton nextStageHandler={nextStageHandler} />}
         <PapugStatus />
         <ManualButton />
       </Grid>

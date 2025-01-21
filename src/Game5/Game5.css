@@ -9,3 +9,17 @@
 .filter {
   filter: brightness(40%)
 }
+
+.questionText {
+  background-color: #ffffffab;
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  flex-direction: column;
+  font-size: 2.5vh;
+  place-self: center;
+  width: fit-content;
+}

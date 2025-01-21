@@ -14,6 +14,7 @@ const style: SxProps = {
   overflowY: "auto",
   bgcolor: "background.paper",
   border: "2px solid #000",
+  borderRadius: 10,
   boxShadow: 24,
   p: 4,
   textAlign: "justify",
@@ -48,7 +49,9 @@ export const Manual: FC = () => {
             fontSize={24}
             style={{ fontWeight: "bold", fontFamily: "cursive" }}
           >
-            {title}
+            {currentPageIndex === 1
+              ? "Структура дидактической игры (С. Е. Ковязина)"
+              : title}
           </Typography>
           <Typography sx={{ mt: 2 }} fontSize={20}>
             {texts[currentPageIndex]}

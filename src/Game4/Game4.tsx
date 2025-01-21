@@ -5,33 +5,62 @@ import { Status } from "../types";
 import { Grid, GridItem } from "../Grid/Grid";
 import { NextButton } from "../NextButton/NextButton";
 import { PapugStatus } from "../PapugStatus/PapugStatus";
-import { photos } from "./const";
+import { answers, extra, questions } from "./const";
 import { ManualButton } from "../Modal/ManualButton";
+import { getRandomElementsExcludingIndex, shuffleArray } from "../utils";
 
 export const Game4 = () => {
-  const { setStatus, onClickAudio, setTitle } = useContext(Context);
+  const { setStatus, onClickAudio, setTitle, setCurrentPage } =
+    useContext(Context);
 
   const [stage, setStage] = useState<number>(0);
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const [checked, setChecked] = useState<boolean>(false);
+  const [preparedAnswers, setPreparedAnswers] = useState<
+    { src: string; isCorrect: boolean }[]
+  >([]);
 
   useEffect(() => {
-    setTitle("Предлоги");
+    setTitle("Кто, что делает?");
   }, []);
 
+  useEffect(() => {
+    const getAnswers = () => {
+
+      const answersArr: { src: string; isCorrect: boolean }[] = [
+        { src: answers[stage], isCorrect: true },
+      ];
+      
+      const randomElements = getRandomElementsExcludingIndex(
+        answers,
+        stage,
+        4,
+        extra
+      ).map((elem) => ({ src: elem, isCorrect: false }));
+
+      return shuffleArray(answersArr.concat(randomElements));
+    };
+
+    setPreparedAnswers(getAnswers());
+  }, [stage]);
+
   const nextStageHandler = () => {
-    onClickAudio();
-    setStage((prev) => prev + 1);
-    setStatus(Status.whait);
-    setCheckedItems([]);
+    if (!questions[stage + 1] && checked) {
+      setCurrentPage(7);
+    } else {
+      onClickAudio();
+      setStage((prev) => prev + 1);
+      setStatus(Status.whait);
+      setChecked(false);
+    }
   };
 
-  const itemClickHandler = (isCorrect: boolean, index: number) => {
-    if (checkedItems.includes(index)) return;
+  const itemClickHandler = (isCorrect: boolean) => {
+    if (checked) return;
 
     onClickAudio();
     if (isCorrect) {
       setStatus(Status.correct);
-      setCheckedItems((prev) => [...prev, index]);
+      setChecked(true);
     }
     if (!isCorrect) {
       setStatus(Status.wrong);
@@ -39,38 +68,45 @@ export const Game4 = () => {
   };
 
   const positions = [
-    { colStart: 2, colEnd: 4, rowStart: 5, rowEnd: 8 },
-    { colStart: 5, colEnd: 7, rowStart: 5, rowEnd: 8 },
-    { colStart: 8, colEnd: 10, rowStart: 5, rowEnd: 8 },
-    { colStart: 2, colEnd: 4, rowStart: 9, rowEnd: 12 },
-    { colStart: 5, colEnd: 7, rowStart: 9, rowEnd: 12 },
-    { colStart: 8, colEnd: 10, rowStart: 9, rowEnd: 12 },
+    { colStart: 2, colEnd: 7, rowStart: 2, rowEnd: 12 },
+    { colStart: 14, colEnd: 19, rowStart: 2, rowEnd: 12 },
+    { colStart: 2, colEnd: 7, rowStart: 13, rowEnd: 23 },
+    { colStart: 14, colEnd: 19, rowStart: 13, rowEnd: 23 },
+    { colStart: 8, colEnd: 13, rowStart: 8, rowEnd: 17 },
   ];
-
-  const { predlog, items, text } = photos[stage];
 
   return (
     <div className="game1Container">
       <Grid>
-        <GridItem position={{ colStart: 5, colEnd: 7, rowStart: 1, rowEnd: 4 }}>
-          <div className="col">
-            <img src={predlog} className="border" />
-            <div className="textBlock">{text}</div>
-          </div>
+        <GridItem
+          position={{ colStart: 19, colEnd: 25, rowStart: 8, rowEnd: 12 }}
+          multiple={1}
+        >
+          <div className="questionText4">{questions[stage]}</div>
         </GridItem>
-        {items.map(({ src, isCorrect }, i) => (
-          <GridItem key={src} position={positions[i]}>
+        {preparedAnswers.map(({ src, isCorrect }, i) => (
+          <GridItem key={i} position={positions[i]} multiple={1}>
             <img
+              loading="eager"
               className={
-                checkedItems.includes(i) ? "greenBorder" : "imgBorder scale"
+                checked && !isCorrect
+                  ? "imgBorder filter noPointer"
+                  : "imgBorder scale"
               }
               src={src}
-              onClick={() => itemClickHandler(isCorrect, i)}
+              onClick={() => itemClickHandler(isCorrect)}
             />
           </GridItem>
         ))}
-        {!!photos[stage + 1] && (
-          <NextButton nextStageHandler={nextStageHandler} />
+        {checked && (
+          <NextButton
+            nextStageHandler={nextStageHandler}
+            multiple={1}
+            colStart={21}
+            colEnd={24}
+            rowStart={4}
+            rowEnd={8}
+          />
         )}
         <PapugStatus />
         <ManualButton />

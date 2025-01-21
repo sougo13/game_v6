@@ -7,7 +7,7 @@ export const StartPage = () => {
   const { setTitle } = useContext(Context);
 
   useEffect(() => {
-    setTitle("Остров с Говорушей");
+    setTitle("Играем с Говорушей: знаю все профессии");
   }, []);
 
   return (

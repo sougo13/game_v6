@@ -95,10 +95,31 @@ th {
 }
 
 .imgBorder {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 20px;
   border: 5px solid #efb159c9;
   cursor: url('../assets/cursorPointer.png') 15 0, pointer;
+  background-color: white;
+}
+
+.imgBorderRed {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+  border: 10px solid #ff2802c9;
+  background-color: white;
+}
+
+.imgBorderGreen {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+  border: 10px solid #3dff02c9;
+  background-color: white;
 }
 
 .border {
