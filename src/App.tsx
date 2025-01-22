@@ -11,12 +11,15 @@ import "./styles/App.css";
 import "./styles/MainPage.css";
 import { Manual } from "./Modal/Manual";
 import bg from "./assets/bg.jpg";
+import okPapug from "./assets/okPapug.png";
+import neOkPapug from "./assets/neOkPapug.png";
+import next from "./assets/next.png";
 import { preloadAssets } from "./utils";
 import { answers as game3Answers } from "./Game3/const";
 import { answers as game4Answers } from "./Game4/const";
 import { answers as game5Answers } from "./Game5/const";
 import { extra as game5Extra } from "./Game5/const";
-import LoadingBar from 'react-top-loading-bar';
+import LoadingBar from "react-top-loading-bar";
 
 const bgAudio = new Audio(bgAudioUrl);
 bgAudio.loop = true;
@@ -45,6 +48,9 @@ function App() {
     const assets = [
       bg,
       goToMenu,
+      okPapug,
+      neOkPapug,
+      next,
       ...game3Answers,
       ...game4Answers,
       ...game5Answers,
@@ -99,10 +105,27 @@ function App() {
 
   return (
     <>
-      {isLoading && <LoadingBar color="#f11946" progress={loadingProgress} />}
+      {isLoading && (
+        <div
+          className="loadingBarContainer"
+          style={{ backgroundImage: `url(${bg})` }}
+        >
+          Загрузка...
+          <LoadingBar
+            containerClassName="loadingBarWrapper"
+            className="loadingBar"
+            height={20}
+            color="#f09819"
+            progress={loadingProgress}
+          />
+        </div>
+      )}
       {!isLoading && (
         <>
-          <div className="background" style={{ backgroundImage: `url(${bg})` }} />
+          <div
+            className="background"
+            style={{ backgroundImage: `url(${bg})` }}
+          />
           <div className="mainPageContainer">
             <div className="mainHeader">
               {currentPageIndex > 1 && (
@@ -117,17 +140,25 @@ function App() {
                 <div className="volumeButton" onClick={volumeBtnClick}>
                   {renderVolumeBtn()}
                 </div>
-                <Slider className="slider" value={volume} onChange={handleChange} />
+                <Slider
+                  className="slider"
+                  value={volume}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="mainArea">{currentPage}</div>
             <Manual />
             <div className="footer">
-              Автор игры: учитель-логопед Ковязина Светлана Евгеньевна <br /> МАДОУ
-              «Детский сад №390» г. Перми
+              Автор игры: учитель-логопед Ковязина Светлана Евгеньевна <br />{" "}
+              МАДОУ «Детский сад №390» г. Перми
             </div>
             {currentPageIndex === 0 && (
-              <button className="starButton" role="button" onClick={onClickHandler}>
+              <button
+                className="starButton"
+                role="button"
+                onClick={onClickHandler}
+              >
                 Вперед!
               </button>
             )}
