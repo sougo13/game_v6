@@ -22,3 +22,12 @@ export const shuffleArray = <T>(array: T[]): T[] => {
   }
   return array;
 };
+
+export const preloadAssets = (assets: string[], onProgress: () => void) => {
+  assets.forEach((asset) => {
+    const img = new Image();
+    img.src = asset;
+    img.onload = onProgress;
+    img.onerror = onProgress;
+  });
+};

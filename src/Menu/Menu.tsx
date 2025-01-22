@@ -19,17 +19,15 @@ export const Menu = () => {
       <div className="manualItem manual" onClick={() => setOpen(true)}>
         Структура игры
       </div>
-      <div className="gamesContainer">
-        <div className="titleBtn">Выбери игру</div>
-        <div className="menuItem" onClick={() => clickHandler(5)}>
-          Кто, что делает?
-        </div>
-        <div className="menuItem" onClick={() => clickHandler(6)}>
-          Загадки по профессиям
-        </div>
-        <div className="menuItem" onClick={() => clickHandler(4)}>
-          Кому, что нужно?
-        </div>
+      <div className="titleBtn">Выбери игру</div>
+      <div className="menuItem" onClick={() => clickHandler(5)}>
+        Кто, что делает?
+      </div>
+      <div className="menuItem" onClick={() => clickHandler(6)}>
+        Загадки по профессиям
+      </div>
+      <div className="menuItem" onClick={() => clickHandler(4)}>
+        Кому, что нужно?
       </div>
       <img className="papugMenu" src={papug} />
     </div>

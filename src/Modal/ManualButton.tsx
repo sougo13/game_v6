@@ -11,7 +11,7 @@ export const ManualButton = () => {
       position={{ colStart: 10, colEnd: 13, rowStart: 1, rowEnd: 2 }}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      style={{ textAlign: "-webkit-right", transform: "translateY(-175px)" }}
+      style={{ textAlign: "-webkit-right", transform: "translateY(-18vh)" }}
     >
       <button className="manualButton" onClick={handleOpen}>
         Инструкция

@@ -184,6 +184,8 @@ th {
   z-index: 1;
   border-radius: 15px;
   font-size: 14px;
+  display: flex;
+  max-width: 33%;
 }
 
 .closeButton {

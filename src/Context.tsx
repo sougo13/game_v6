@@ -1,6 +1,4 @@
 import { createContext, FC, useRef, useState } from "react";
-import { Game1 } from "./Game1/Game1";
-import { Game2 } from "./Game2/Game2";
 import { Game3 } from "./Game3/Game3";
 import { Game4 } from "./Game4/Game4";
 import { Game5 } from "./Game5/Game5";
@@ -80,8 +78,8 @@ export const ContextProvider: FC<{ children: JSX.Element }> = ({
   const pages: JSX.Element[] = [
     <StartPage />,
     <Menu />,
-    <Game1 />,
-    <Game2 />,
+    <div></div>,
+    <div></div>,
     <Game3 />,
     <Game4 />,
     <Game5 />,

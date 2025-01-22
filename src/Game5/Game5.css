@@ -19,7 +19,7 @@
   align-items: center;
   text-align: justify;
   flex-direction: column;
-  font-size: 2.5vh;
+  font-size: min(2.5vh, 1.8vw);
   place-self: center;
   width: fit-content;
 }
